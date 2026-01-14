@@ -822,6 +822,48 @@ if (ageMin != null) {
 
 
 
+<details> <summary>간단한 프로시저 -> jpa</summary>
+
+```
+ALTER PROCEDURE [dbo].[airpod_proc_delete]
+	-- Add the parameters for the stored procedure here
+	@user_id varchar(20),
+	@airpod_seq int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+    BEGIN
+        RETURN 1;
+    END
+
+    DELETE FROM tb_airpod
+    WHERE airpod_seq = @airpod_seq;
+
+    RETURN 0;
+END
+
+
+============================================================================================================
+============================================================================================================
+컨트롤러
+@DeleteMapping("/{airpodSeq}")
+public void delete(@PathVariable int airpodSeq) { service.delete(airpodSeq); }
+
+서비스
+@Transactional
+public void delete(int airpodSeq) { repo.deleteById(airpodSeq); }
+
+```
+</details>
+
+복잡한 프로시저는 mybatis
+
+
+
+
 
 
 
