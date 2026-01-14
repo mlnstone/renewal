@@ -861,6 +861,53 @@ public void delete(int airpodSeq) { repo.deleteById(airpodSeq); }
 
 복잡한 프로시저는 mybatis
 
+<details> <summary>insert into </summary>
+
+```
+		sql = "INSERT INTO " & tableName &" (counsel_seq,counsel_nm,counsel_hp,counsel_parents_hp,counsel_parents_nm, counsel_school_nm,counsel_school_grade,counsel_school_year_cd,zip,addr1,addr2,states,cstates,subject,subject2,connect_content,possibility_content,rsv_date1,rsv_hour1,rsv_min1,customer_content,rsv_date2,rsv_hour2,rsv_min2,result_content,reg_id,reg_name,biz_id,biz_name,demo_id,demo_name,demo2_id,demo2_name,reg_date,jisa_cd,jisa_nm,counsel_file_0,counsel_file_1,counsel_file_2,counsel_file_3,homepagedb"
+		sql = sql & " ) VALUES ("
+```
+빌더패턴 (순서 달라도 됨!)
+```
+	@Builder
+    private Counsel(
+            String counselSeq,
+            String counselNm,
+            String counselHp,
+            String counselParentsHp,
+            String counselParentsNm,
+            String counselSchoolNm,
+            String counselSchoolGrade,
+            String counselSchoolYearCd
+            // ... 나머지
+    ) {
+        this.counselSeq = counselSeq;
+        this.counselNm = counselNm;
+        this.counselHp = counselHp;
+        this.counselParentsHp = counselParentsHp;
+        this.counselParentsNm = counselParentsNm;
+        this.counselSchoolNm = counselSchoolNm;
+        this.counselSchoolGrade = counselSchoolGrade;
+        this.counselSchoolYearCd = counselSchoolYearCd;
+        // ... 나머지 대입
+    }
+
+    public static Counsel from(CounselCreateRequest req) {
+        return Counsel.builder()
+                .counselSeq(req.counselSeq())
+                .counselNm(req.counselNm())
+                .counselHp(req.counselHp())
+                .counselParentsHp(req.counselParentsHp())
+                .counselParentsNm(req.counselParentsNm())
+                .counselSchoolNm(req.counselSchoolNm())
+                .counselSchoolGrade(req.counselSchoolGrade())
+                .counselSchoolYearCd(req.counselSchoolYearCd())
+                // ... 나머지 매핑
+                .build();
+    }
+```
+</details>
+
 
 
 
